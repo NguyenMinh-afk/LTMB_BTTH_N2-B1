@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 // Import các màn hình
 import HomeScreen from '../../src/screens/Home/HomeScreen';
@@ -25,13 +25,34 @@ const HomeStackNavigator = () => (
         headerShown: true 
       }} 
     />
-    <HomeStack.Screen 
-      name="OrderDetailScreen" 
-      component={OrderDetailScreen} 
-      options={{ 
-        title: 'Shopping Cart', 
-        headerShown: true 
-      }} 
+<HomeStack.Screen 
+  name="OrderDetailScreen" 
+  component={OrderDetailScreen} 
+  options={({ navigation }) => ({
+    title: 'Shopping Cart', 
+    headerShown: true,
+    headerLeft: () => (
+      <Ionicons
+        name="arrow-back"
+        size={24}
+        color="black"
+        style={{ marginLeft: 15 }}
+        onPress={() => navigation.goBack()} // Nút quay lại
+      />
+    ),
+    headerRight: () => (
+      <TouchableOpacity
+        style={{ marginRight: 15 }}
+        onPress={() => alert('Trash icon clicked!')} // Hành động khi bấm vào thùng rác
+      >
+        <Ionicons 
+          name="trash-outline" // Icon thùng rác
+          size={24} 
+          color="black" 
+        />
+      </TouchableOpacity>
+        ),
+      })} 
     />
   </HomeStack.Navigator>
 );
